@@ -10,11 +10,11 @@ class Check::Manual::AnyCount < Check
   end
 
   def service
-    "manual"
+    "Manual count"
   end
 
   def icon
-    ["fas", "exclamation"]
+    ["fas", "hashtag"]
   end
 
   def manual?

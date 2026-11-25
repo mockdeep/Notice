@@ -9,7 +9,7 @@ RSpec.describe ChecksController do
 
       get(:index)
 
-      expect(rendered).to have_text("Checks")
+      expect(rendered).to have_text("Your checks")
     end
   end
 
@@ -19,7 +19,7 @@ RSpec.describe ChecksController do
 
     get(:index)
 
-    expect(rendered).to have_button("Refresh All 2 Targets")
+    expect(rendered).to have_button("Refresh all 2 targets")
   end
 
   it "displays Refresh 1 Target when targets have unreached goal" do
@@ -28,7 +28,7 @@ RSpec.describe ChecksController do
 
     get(:index)
 
-    expect(rendered).to have_button("Refresh 1 Target")
+    expect(rendered).to have_button("Refresh 1 target")
   end
 
   it "does not display Refresh 1 Targets when all targets match goal" do
@@ -37,7 +37,7 @@ RSpec.describe ChecksController do
 
     get(:index)
 
-    expect(rendered).to have_no_button("Refresh 1 Targets")
+    expect(rendered).to have_no_button("Refresh 1 target")
   end
 
   describe "#show" do

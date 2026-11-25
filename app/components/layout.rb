@@ -3,7 +3,8 @@
 class Components::Layout < Components::Base
   include Phlex::Rails::Layout
 
-  FAVICON_COLOR = "yellow"
+  # The tab icon shows the highest priority among checks over target.
+  FAVICON_COLORS = { normal: "yellow", high: "orange", urgent: "red" }.freeze
   HOTKEYS_ACTION = "keydown@document->hotkeys#handleKeydown"
   STYLESHEET_OPTIONS = { media: "all", "data-turbo-track": "reload" }.freeze
 
@@ -30,8 +31,21 @@ class Components::Layout < Components::Base
 
     stylesheet_link_tag("application", **STYLESHEET_OPTIONS)
     javascript_include_tag("application", "data-turbo-track": "reload")
-    favicon_link_tag("favicon-#{FAVICON_COLOR}.ico", sizes: "32x32")
-    favicon_link_tag("favicon-#{FAVICON_COLOR}.svg", type: "image/svg+xml")
+    favicons
+  end
+
+  def favicons
+    color = favicon_color
+
+    favicon_link_tag("favicon-#{color}.ico", sizes: "32x32")
+    favicon_link_tag("favicon-#{color}.svg", type: "image/svg+xml")
+  end
+
+  def favicon_color
+    return "grey" unless current_user.logged_in?
+
+    checks = current_user.checks.preload(:latest_count, :target)
+    FAVICON_COLORS.fetch(Check.top_priority(checks), "grey")
   end
 
   def main_content

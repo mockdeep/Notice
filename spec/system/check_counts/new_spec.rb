@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "check_counts/new", :js do
   def user_creates_count
-    click_on("visit manual")
+    click_on("Enter count")
 
     fill_in(:Value, with: 10)
 

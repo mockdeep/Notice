@@ -12,8 +12,8 @@ RSpec.describe "Trello integration", :js do
   end
 
   def start_new_check
-    expect(page).to have_heading("Checks")
-    click_on("+ New Check")
+    expect(page).to have_heading("Your checks")
+    click_on("New check")
 
     expect(page).to have_text("Pick an integration")
   end
@@ -37,7 +37,7 @@ RSpec.describe "Trello integration", :js do
     select_list(list)
     input_name(name)
 
-    expect(page).to have_heading("Checks")
+    expect(page).to have_heading("Your checks")
   end
 
   def select_board(board)

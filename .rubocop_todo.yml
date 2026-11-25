@@ -24,7 +24,6 @@ Layout/LineLength:
 # Configuration parameters: AllowedParentClasses.
 Lint/MissingSuper:
   Exclude:
-    - 'app/components/check_list.rb'
     - 'app/components/check_name_form.rb'
     - 'app/components/error_explanation.rb'
     - 'app/components/icon.rb'

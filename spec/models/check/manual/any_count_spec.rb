@@ -16,14 +16,14 @@ RSpec.describe Check::Manual::AnyCount do
   end
 
   describe "#service" do
-    it "returns 'manual'" do
-      expect(described_class.new.service).to eq("manual")
+    it "returns 'Manual count'" do
+      expect(described_class.new.service).to eq("Manual count")
     end
   end
 
   describe "#icon" do
     it "returns an array for the icon" do
-      expect(described_class.new.icon).to eq(["fas", "exclamation"])
+      expect(described_class.new.icon).to eq(["fas", "hashtag"])
     end
   end
 

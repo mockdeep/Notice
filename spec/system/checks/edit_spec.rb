@@ -30,6 +30,16 @@ RSpec.describe "checks/edit", :js do
       .to deactivate_check(check.name).in(page)
   end
 
+  it "allows deleting a check" do
+    check = create(:check)
+    sign_in(default_user)
+
+    find_check(check).edit_icon.click
+    accept_confirm { click_on("Delete check") }
+
+    expect(page).to have_flash(:success, "Check deleted").and have_no_checks
+  end
+
   it "allows setting a moving target on a check" do
     check = create(:check, value: 5)
     sign_in(default_user)

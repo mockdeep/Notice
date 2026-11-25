@@ -24,7 +24,14 @@ class Check < ApplicationRecord
     },
   )
 
+  # Lowest to highest.
+  PRIORITIES = [:normal, :high, :urgent].freeze
+
   delegate :value, to: :target, prefix: true
+
+  def self.top_priority(checks)
+    checks.select(&:active?).map(&:priority).max_by { PRIORITIES.index(it) }
+  end
 
   def self.model_name
     ActiveModel::Name.new(base_class)
@@ -36,6 +43,11 @@ class Check < ApplicationRecord
 
   def active?
     last_value.present? && last_value > target.value
+  end
+
+  # Every check is normal priority until checks get a priority setting.
+  def priority
+    :normal
   end
 
   def refresh=(refresh)

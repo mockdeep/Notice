@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe "manual integration", :js do
   def start_new_check
-    expect(page).to have_heading("Checks")
-    click_on("+ New Check")
+    expect(page).to have_heading("Your checks")
+    click_on("New check")
 
     expect(page).to have_text("Pick an integration")
   end
@@ -15,7 +15,7 @@ RSpec.describe "manual integration", :js do
     expect(page).to have_text("Name your check")
     fill_in("Name", with: name)
     click_on("Done")
-    expect(page).to have_heading("Checks")
+    expect(page).to have_heading("Your checks")
   end
 
   it "allows a user to configure a manual integration" do

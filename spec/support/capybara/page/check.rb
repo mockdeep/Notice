@@ -4,15 +4,11 @@ class Page::Check
   attr_accessor :element
 
   def self.find(page, check)
-    new(page.find(".card", text: check.name))
+    new(page.find(".check", text: check.name))
   end
 
   def initialize(element)
     self.element = element
-  end
-
-  def delete_icon
-    element.find(".fa-trash-alt")
   end
 
   def edit_icon

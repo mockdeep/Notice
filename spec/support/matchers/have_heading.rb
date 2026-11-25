@@ -8,12 +8,12 @@ class Matchers::HaveHeading
   end
 
   def matches?(page)
-    page.has_selector?("h2", text:)
+    page.has_selector?("h1, h2", text:)
   end
 
   def failure_message
     <<~MESSAGE.squish
-      expected to find h2 tag with text #{text} but was not found
+      expected to find h1 or h2 tag with text #{text} but was not found
     MESSAGE
   end
 end
