@@ -29,7 +29,7 @@ RSpec.describe Trello::Client do
 
       result = described_class.authorize_url(return_url:)
 
-      expected = "https://trello.com/1/authorize?callback_method=fragment&expiration=never&key=#{developer_public_key}&name=LetMeKnowWhen&response_type=fragment&return_url=https%3A%2F%2Ffoobar.com%2Fbaz&scope=read%2Cwrite"
+      expected = "https://trello.com/1/authorize?callback_method=fragment&expiration=never&key=#{developer_public_key}&name=Notice&response_type=fragment&return_url=https%3A%2F%2Ffoobar.com%2Fbaz&scope=read%2Cwrite"
       expect(result).to eq(expected)
     end
   end

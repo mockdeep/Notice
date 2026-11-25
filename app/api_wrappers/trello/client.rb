@@ -12,7 +12,7 @@ class Trello::Client
       callback_method: "fragment",
       expiration: "never",
       key: developer_public_key,
-      name: "LetMeKnowWhen",
+      name: "Notice",
       response_type: "fragment",
       return_url:,
       scope: "read,write",
