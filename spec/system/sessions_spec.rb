@@ -15,7 +15,7 @@ RSpec.describe "user sessions" do
     sign_in_with(email: "wrong@email", password: default_user.password)
 
     expect(page).to have_flash(:error, "Invalid email or password")
-      .and have_text("Log in to LetMeKnowWhen")
+      .and have_text("Log in to Notice")
       .and have_no_text(default_user.email)
   end
 
@@ -23,7 +23,7 @@ RSpec.describe "user sessions" do
     sign_in_with(email: default_user.email, password: "wrong password")
 
     expect(page).to have_flash(:error, "Invalid email or password")
-      .and have_text("Log in to LetMeKnowWhen")
+      .and have_text("Log in to Notice")
       .and have_no_text(default_user.email)
   end
 

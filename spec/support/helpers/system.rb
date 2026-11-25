@@ -12,7 +12,7 @@ module Helpers::System
 
     click_on("Log In")
 
-    expect(page).to have_text("Log in to LetMeKnowWhen")
+    expect(page).to have_text("Log in to Notice")
 
     fill_in("Email", with: email)
     fill_in("Password", with: password)

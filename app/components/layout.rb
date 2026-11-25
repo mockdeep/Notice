@@ -24,7 +24,7 @@ class Components::Layout < Components::Base
   private
 
   def head_tags
-    title { "LetMeKnowWhen" }
+    title { "Notice" }
     csrf_meta_tags
     csp_meta_tag
     meta(name: "viewport", content: "width=device-width, initial-scale=1.0")
@@ -38,7 +38,7 @@ class Components::Layout < Components::Base
     div(class: "logo") do
       image_tag("LMKW-logo-black.png", height: 100)
       br
-      div(class: "title") { "Let Me Know When" }
+      div(class: "title") { "Notice" }
     end
   end
 
