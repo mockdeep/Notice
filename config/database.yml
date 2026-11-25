@@ -5,14 +5,14 @@ default: &default
 
 development:
   <<: *default
-  database: letmeknowwhen_development
+  database: notice_development
   host: localhost
 
 test:
   <<: *default
-  database: letmeknowwhen_test
+  database: notice_test
   host: localhost
 
 production:
   <<: *default
-  database: letmeknowwhen_production
+  database: notice_production
