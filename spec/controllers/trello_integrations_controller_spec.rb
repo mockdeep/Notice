@@ -19,7 +19,7 @@ RSpec.describe TrelloIntegrationsController do
 
       get(:new)
 
-      expect(rendered).to have_link("Authenticate with Trello")
+      expect(rendered).to have_link("Connect to Trello")
     end
   end
 end

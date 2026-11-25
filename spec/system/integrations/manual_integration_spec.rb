@@ -7,14 +7,14 @@ RSpec.describe "manual integration", :js do
     expect(page).to have_heading("Your checks")
     click_on("New check")
 
-    expect(page).to have_text("Pick an integration")
+    expect(page).to have_text("What should Notice keep count of?")
   end
 
   def create_manual_check(name:)
-    click_on("manual")
+    click_on("Manual count")
     expect(page).to have_text("Name your check")
     fill_in("Name", with: name)
-    click_on("Done")
+    click_on("Create check")
     expect(page).to have_heading("Your checks")
   end
 

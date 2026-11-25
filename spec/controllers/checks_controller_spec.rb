@@ -157,7 +157,7 @@ RSpec.describe ChecksController do
 
       get(:edit, params: { id: check.id })
 
-      expect(rendered).to have_text("Editing Check: #{check.name}")
+      expect(rendered).to have_text("Edit check").and have_text(check.name)
     end
   end
 
@@ -211,7 +211,7 @@ RSpec.describe ChecksController do
         check_params = { target_attributes: { value: "" } }
         put(:update, params: { id: check.id, check: check_params })
 
-        expect(rendered).to have_text("Editing Check: #{check.name}")
+        expect(rendered).to have_text("Edit check").and have_text(check.name)
       end
     end
   end

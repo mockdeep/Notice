@@ -80,7 +80,7 @@ RSpec.describe AccountsController do
 
       get(:show)
 
-      expect(response.body).to include("My Account")
+      expect(response.body).to include("Your account")
     end
   end
 
@@ -161,7 +161,7 @@ RSpec.describe AccountsController do
 
         put(:update, params: invalid_update_params)
 
-        expect(response.body).to include("My Account")
+        expect(response.body).to include("Your account")
       end
     end
   end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Matchers::HaveHeading
+  include RSpec::Matchers::Composable
+
   attr_reader :text
 
   def initialize(text)

@@ -11,16 +11,12 @@ class Views::Checks::Show < Views::Base
   end
 
   def view_template
-    div(class: "check-details") do
-      h1 { @check.name }
+    PageHeader(title: @check.name, subtitle: "Unchecked checklist items")
 
-      p(class: "no-items") { "No cards found in this list" } if @cards.empty?
+    p(class: "no-items") { "No cards found in this list" } if @cards.empty?
 
-      div(class: "checklists-grid") do
-        @cards.each { |card| checklists(card) }
-      end
-
-      link_to("Back to Checks", checks_path, class: "btn-primary")
+    div(class: "checklists-grid") do
+      @cards.each { |card| checklists(card) }
     end
   end
 

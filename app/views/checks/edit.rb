@@ -6,13 +6,12 @@ class Views::Checks::Edit < Views::Base
   end
 
   def view_template
-    h1 do
-      plain("Editing Check: ")
-      em { @check.name }
-    end
+    PageHeader(title: "Edit check", subtitle: @check.name)
 
-    edit_form
-    delete_button
+    div(class: "form-card") do
+      edit_form
+      delete_button
+    end
   end
 
   private
@@ -25,7 +24,7 @@ class Views::Checks::Edit < Views::Base
 
       form.fields_for(:target) { |target_form| target_fields(target_form) }
 
-      div(class: "actions") { form.submit("Update Check") }
+      div(class: "actions") { form.submit("Save changes") }
     end
   end
 
@@ -42,7 +41,7 @@ class Views::Checks::Edit < Views::Base
   def target_fields(form)
     field(form, :value, "Target") { form.number_field(:value, required: true) }
     field(form, :delta) { form.number_field(:delta, required: true) }
-    field(form, :goal_value, "Goal Target") do
+    field(form, :goal_value, "Goal target") do
       form.number_field(:goal_value, required: true)
     end
   end

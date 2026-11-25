@@ -10,7 +10,7 @@ RSpec.describe CheckCountsController do
 
       get(new_check_count_path(check), params: { check_id: check.id })
 
-      expect(rendered).to have_text("Editing Count for Check:")
+      expect(rendered).to have_text("Enter count")
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.describe CheckCountsController do
 
         post(check_counts_path(check), params:)
 
-        expect(rendered).to have_text("Editing Count for Check:")
+        expect(rendered).to have_text("Enter count")
       end
     end
   end

@@ -8,14 +8,23 @@ class Components::CheckNameForm < Components::Base
 
   # Yields the form builder so callers can add their own hidden fields.
   def view_template(&block)
-    h2 { "Name your check" }
+    PageHeader(title: "Name your check")
 
-    form_with(model: @check, url: @url) do |form|
-      yield(form) if block
+    div(class: "form-card") do
+      form_with(model: @check, url: @url) do |form|
+        yield(form) if block
+        name_field(form)
+        div(class: "actions") { form.submit("Create check") }
+      end
+    end
+  end
+
+  private
+
+  def name_field(form)
+    div(class: "field") do
       form.label(:name)
       form.text_field(:name)
-
-      form.submit("Done")
     end
   end
 end
