@@ -199,6 +199,12 @@ textarea {
   padding: var(--space-3) 14px;
 }
 
+.field-hint {
+  margin-top: var(--space-1);
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
 div.field,
 div.actions {
   margin-bottom: var(--space-4);

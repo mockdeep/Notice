@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class Views::Checks::Edit < Views::Base
+  TARGET_HINTS = {
+    value: "Notice flags this check when the count goes over this number.",
+    delta: "The target drops by this much each day until it reaches the " \
+           "goal target. Use 0 to keep it fixed.",
+    goal_value: "The target won't drop below this.",
+  }.freeze
   def initialize(check:)
     @check = check
   end
@@ -39,10 +45,17 @@ class Views::Checks::Edit < Views::Base
   end
 
   def target_fields(form)
-    field(form, :value, "Target") { form.number_field(:value, required: true) }
-    field(form, :delta) { form.number_field(:delta, required: true) }
-    field(form, :goal_value, "Goal target") do
-      form.number_field(:goal_value, required: true)
+    target_field(form, :value, "Target")
+    target_field(form, :delta, "Delta")
+    target_field(form, :goal_value, "Goal target")
+  end
+
+  def target_field(form, name, label)
+    hint_id = "#{form.field_id(name)}_hint"
+
+    field(form, name, label) do
+      form.number_field(name, required: true, aria: { describedby: hint_id })
+      p(id: hint_id, class: "field-hint") { TARGET_HINTS[name] }
     end
   end
 
