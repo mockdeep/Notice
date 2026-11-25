@@ -715,6 +715,24 @@ main {
   color: var(--color-ink);
 }
 
+.check-row-goal {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 2px 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+  background-color: var(--color-butter);
+  border-radius: var(--radius-pill);
+}
+
+.btn-small {
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
 .all-clear {
   padding: var(--space-5);
   background-color: var(--color-surface);

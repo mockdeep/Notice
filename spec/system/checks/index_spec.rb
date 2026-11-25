@@ -47,21 +47,21 @@ RSpec.describe "checks/index", :js do
     expect(page).to have_active_check(check.name)
   end
 
-  it "displays a button to refresh one target when no active checks" do
+  it "allows lowering the target of one check" do
     checks = create_pair(:check, value: 5, target_value: 5, target_delta: 1)
     sign_in(default_user)
 
-    click_on("Refresh 1 target")
+    click_on("Lower target for #{checks.second.name}")
 
-    expect(page).to have_active_check(checks.first.name)
-      .and have_inactive_check(checks.second.name)
+    expect(page).to have_active_check(checks.second.name)
+      .and have_inactive_check(checks.first.name)
   end
 
-  it "displays a button to refresh all targets when no active checks" do
+  it "allows lowering all targets when no active checks" do
     checks = create_pair(:check, value: 5, target_value: 5, target_delta: 1)
     sign_in(default_user)
 
-    click_on("Refresh all 2 targets")
+    click_on("Lower all targets")
 
     expect(page).to have_active_check(checks.first.name)
       .and have_active_check(checks.second.name)

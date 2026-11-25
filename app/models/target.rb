@@ -20,4 +20,8 @@ class Target < ApplicationRecord
             presence: true
 
   scope :unreached_goal, -> { where("goal_value != value") }
+
+  def goal_reached?
+    value == goal_value
+  end
 end

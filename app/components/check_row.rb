@@ -15,6 +15,7 @@ class Components::CheckRow < Components::Base
         span(class: "check-service") { @check.service }
       end
       count
+      goal unless @check.target.goal_reached?
       CheckActions(check: @check)
     end
   end
@@ -39,5 +40,21 @@ class Components::CheckRow < Components::Base
         plain(" of #{@check.target_value}")
       end
     end
+  end
+
+  # Shown while the target is still dropping toward its goal target, with a
+  # button to lower it early.
+  def goal
+    span(class: "check-row-goal") do
+      Icon("fas", "arrow-down", aria: { hidden: true })
+      plain("goal #{@check.target.goal_value}")
+    end
+
+    button_to(
+      "Lower target",
+      target_refreshes_path(target_id: @check.target.id),
+      class: "btn btn-small",
+      aria: { label: "Lower target for #{@check.name}" },
+    )
   end
 end

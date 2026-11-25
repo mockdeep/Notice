@@ -72,22 +72,23 @@ class Views::Checks::Index < Views::Base
   def unreached_goals
     return if @unreached_goal_targets.empty?
 
-    p { "Some checks haven't reached their goal target yet." }
+    p { unreached_goals_message }
     div(class: "all-clear-actions") do
-      refresh_button("Refresh 1 target", "one")
-      next unless @unreached_goal_targets.many?
-
-      count = @unreached_goal_targets.count
-      refresh_button("Refresh all #{count} targets", "all")
+      button_to(
+        "Lower all targets",
+        target_refreshes_path(checks: "all"),
+        remote: false,
+        class: "btn-primary",
+      )
     end
   end
 
-  def refresh_button(label, checks)
-    button_to(
-      label,
-      target_refreshes_path(checks:),
-      remote: false,
-      class: "btn-primary",
-    )
+  def unreached_goals_message
+    if @unreached_goal_targets.many?
+      count = @unreached_goal_targets.count
+      "#{count} checks below haven't reached their goal target yet."
+    else
+      "1 check below hasn't reached its goal target yet."
+    end
   end
 end
