@@ -4,13 +4,13 @@ require "rails_helper"
 
 RSpec.describe Check::Github::UserHasAssignedPullRequests do
   def fake_implementation
-    require Rails.root.join("spec/support/fake_api/github/implementation")
-    existing_implementation = Integration::Github.implementation
-    Integration::Github.implementation = FakeApi::Github::Implementation
+    require Rails.root.join("spec/support/fake_api/github/client")
+    existing_class = Integration::Github.client_class
+    Integration::Github.client_class = FakeApi::Github::Client
 
     yield
 
-    Integration::Github.implementation = existing_implementation
+    Integration::Github.client_class = existing_class
   end
 
   describe "#next_count" do

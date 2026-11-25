@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Check::Github::UserHasAssignedPullRequests < Check
-  delegate :pull_requests, to: :integration
+  delegate :count_assigned_pull_requests, to: :integration
 
   STEPS = ["name"].freeze
 
@@ -14,7 +14,7 @@ class Check::Github::UserHasAssignedPullRequests < Check
   end
 
   def next_count
-    pull_requests.count
+    count_assigned_pull_requests
   end
 
   def next_step
@@ -22,6 +22,6 @@ class Check::Github::UserHasAssignedPullRequests < Check
   end
 
   def url
-    "#{integration.web_endpoint}pulls/assigned"
+    "#{integration.web_endpoint}/pulls/assigned"
   end
 end

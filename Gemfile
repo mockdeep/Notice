@@ -13,14 +13,12 @@ gem "rails", "~> 8.1.0"
 gem "bcrypt"
 gem "bootsnap", require: false
 gem "cssbundling-rails"
-gem "faraday-retry", require: false # wanted by octokit
 gem "goldiloader"
 gem "http"
 gem "jsbundling-rails"
 gem "junk_drawer"
 gem "mission_control-jobs"
 gem "nokogiri", "~> 1.19.1" # for Ruby 3.2
-gem "octokit"
 gem "pg"
 gem "phlex-rails"
 gem "propshaft"
