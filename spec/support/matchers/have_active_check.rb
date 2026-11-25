@@ -3,7 +3,9 @@
 require_relative "have_check"
 
 class Matchers::HaveActiveCheck < Matchers::HaveCheck
-  def matches?(page)
-    super(page.find(".active"))
+  private
+
+  def name_selector
+    ".checks-attention #{NAME_SELECTOR}"
   end
 end

@@ -3,7 +3,9 @@
 require_relative "have_check"
 
 class Matchers::HaveInactiveCheck < Matchers::HaveCheck
-  def matches?(page)
-    super(page.find(".inactive"))
+  private
+
+  def name_selector
+    ".checks-on-target #{NAME_SELECTOR}"
   end
 end

@@ -7,15 +7,6 @@ RSpec.describe "checks/index", :js do
     Page::Check.find(page, check)
   end
 
-  it "allows deleting checks" do
-    check = create(:check)
-    sign_in(default_user)
-
-    accept_confirm { find_check(check).delete_icon.click }
-
-    expect(page).to have_flash(:success, "Check deleted").and have_no_checks
-  end
-
   it "displays active checks in active section" do
     check = create(:check, value: 5)
     sign_in(default_user)
@@ -60,7 +51,7 @@ RSpec.describe "checks/index", :js do
     checks = create_pair(:check, value: 5, target_value: 5, target_delta: 1)
     sign_in(default_user)
 
-    click_on("Refresh 1 Target")
+    click_on("Refresh 1 target")
 
     expect(page).to have_active_check(checks.first.name)
       .and have_inactive_check(checks.second.name)
@@ -70,7 +61,7 @@ RSpec.describe "checks/index", :js do
     checks = create_pair(:check, value: 5, target_value: 5, target_delta: 1)
     sign_in(default_user)
 
-    click_on("Refresh All 2 Targets")
+    click_on("Refresh all 2 targets")
 
     expect(page).to have_active_check(checks.first.name)
       .and have_active_check(checks.second.name)

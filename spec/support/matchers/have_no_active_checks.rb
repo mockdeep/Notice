@@ -3,7 +3,9 @@
 require_relative "have_no_checks"
 
 class Matchers::HaveNoActiveChecks < Matchers::HaveNoChecks
-  def matches?(page)
-    super(page.find(".active"))
+  private
+
+  def check_selector
+    ".checks-attention .check"
   end
 end

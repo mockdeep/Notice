@@ -43,7 +43,7 @@ class Matchers::HaveCheck
 
   attr_accessor :element, :expected_name
 
-  NAME_SELECTOR = ".card h3"
+  NAME_SELECTOR = ".check .check-name"
 
   def initialize(expected_name)
     self.expected_name = expected_name
@@ -63,11 +63,15 @@ class Matchers::HaveCheck
   def no_check_with_name_message
     <<~MESSAGE.squish
       expected to find check with name "#{expected_name}" but found checks
-      with names: #{element.all(NAME_SELECTOR).map(&:text)}
+      with names: #{element.all(name_selector).map(&:text)}
     MESSAGE
   end
 
+  def name_selector
+    NAME_SELECTOR
+  end
+
   def has_name?
-    element.has_selector?(NAME_SELECTOR, text: expected_name)
+    element.has_selector?(name_selector, text: expected_name)
   end
 end

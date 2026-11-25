@@ -11,6 +11,13 @@ class Views::Checks::Edit < Views::Base
       em { @check.name }
     end
 
+    edit_form
+    delete_button
+  end
+
+  private
+
+  def edit_form
     form_with(model: @check) do |form|
       ErrorExplanation(model: @check)
 
@@ -22,7 +29,15 @@ class Views::Checks::Edit < Views::Base
     end
   end
 
-  private
+  def delete_button
+    confirm = "Delete check? #{@check.name}"
+    form = { data: { turbo: true, turbo_confirm: confirm } }
+    options = { method: :delete, class: "btn-danger", form: }
+
+    div(class: "danger-zone") do
+      button_to("Delete check", check_path(@check), **options)
+    end
+  end
 
   def target_fields(form)
     field(form, :value, "Target") { form.number_field(:value, required: true) }
