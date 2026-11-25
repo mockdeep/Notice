@@ -3,7 +3,7 @@
 class Components::Layout < Components::Base
   include Phlex::Rails::Layout
 
-  FAVICON_COLORS = ["black", "blue", "purple", "orange"].freeze
+  FAVICON_COLOR = "yellow"
   HOTKEYS_ACTION = "keydown@document->hotkeys#handleKeydown"
   STYLESHEET_OPTIONS = { media: "all", "data-turbo-track": "reload" }.freeze
 
@@ -31,14 +31,16 @@ class Components::Layout < Components::Base
 
     stylesheet_link_tag("application", **STYLESHEET_OPTIONS)
     javascript_include_tag("application", "data-turbo-track": "reload")
-    favicon_link_tag("fat-dot-#{FAVICON_COLORS.sample}.ico")
+    favicon_link_tag("favicon-#{FAVICON_COLOR}.ico", sizes: "32x32")
+    favicon_link_tag("favicon-#{FAVICON_COLOR}.svg", type: "image/svg+xml")
   end
 
   def logo
     div(class: "logo") do
-      image_tag("notice-logo-black.png", height: 55)
-      br
-      div(class: "title") { "Notice" }
+      span(class: "wordmark", role: "img", aria: { label: "Notice" }) do
+        image_tag("notice-marker.svg", class: "wordmark-marker", alt: "")
+        plain("Notice")
+      end
     end
   end
 
