@@ -36,7 +36,7 @@ class Components::Layout < Components::Base
 
   def logo
     div(class: "logo") do
-      image_tag("LMKW-logo-black.png", height: 100)
+      image_tag("notice-logo-black.png", height: 55)
       br
       div(class: "title") { "Notice" }
     end
