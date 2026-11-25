@@ -14,9 +14,8 @@ class Components::Layout < Components::Base
       head { head_tags }
 
       body(data: { controller: "hotkeys", action: HOTKEYS_ACTION }) do
-        logo
-        nav
-        main(&)
+        site_header
+        main_content(&)
       end
     end
   end
@@ -35,32 +34,44 @@ class Components::Layout < Components::Base
     favicon_link_tag("favicon-#{FAVICON_COLOR}.svg", type: "image/svg+xml")
   end
 
-  def logo
-    div(class: "logo") do
-      span(class: "wordmark", role: "img", aria: { label: "Notice" }) do
-        image_tag("notice-marker.svg", class: "wordmark-marker", alt: "")
-        plain("Notice")
+  def main_content
+    main do
+      flashes
+      yield
+    end
+  end
+
+  def site_header
+    header(class: "site-header") do
+      div(class: "site-header-inner") do
+        logo
+        nav(class: "site-nav", aria: { label: "Account" }) do
+          current_user.logged_in? ? logged_in_nav : logged_out_nav
+        end
       end
     end
   end
 
-  def nav
-    div(class: "nav") do
-      current_user.logged_in? ? logged_in_nav : logged_out_nav
-      flashes
+  def logo
+    home = current_user.logged_in? ? checks_path : root_path
+
+    link_to(home, class: "wordmark", aria: { label: "Notice" }) do
+      image_tag("notice-marker.svg", class: "wordmark-marker", alt: "")
+      plain("Notice")
     end
   end
 
   def logged_in_nav
-    plain(current_user.email)
-    br
+    span(class: "site-nav-email") { current_user.email }
     link_to("Account", account_path)
-    button_to("Log Out", session_path, method: :delete)
+    button_to("Log out", session_path, method: :delete)
   end
 
   def logged_out_nav
-    link_to("Log In", new_session_path) unless current_page?(new_session_path)
-    link_to("Sign Up", new_account_path)
+    link_to("Log in", new_session_path) unless current_page?(new_session_path)
+    return if current_page?(new_account_path)
+
+    link_to("Sign up", new_account_path, class: "btn")
   end
 
   def flashes

@@ -27,7 +27,7 @@ RSpec.describe AccountsController do
     it "renders a new form" do
       get(:new)
 
-      expect(response.body).to include("New Account")
+      expect(response.body).to include("Create your account")
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe AccountsController do
       it "renders the new page" do
         post(:create, params: invalid_create_params)
 
-        expect(response.body).to include("New Account")
+        expect(response.body).to include("Create your account")
       end
     end
   end

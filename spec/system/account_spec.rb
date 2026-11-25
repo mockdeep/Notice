@@ -9,11 +9,11 @@ RSpec.describe "user account" do
     password_confirmation: password
   )
     visit("/")
-    click_on("Sign Up")
+    click_on("Sign up")
     fill_in("Email", with: email)
     fill_in("Password", with: password)
     fill_in("Password confirmation", with: password_confirmation)
-    click_on("Create Account")
+    click_on("Create account")
   end
 
   def update_account_with(email:)
