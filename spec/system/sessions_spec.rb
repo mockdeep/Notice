@@ -8,7 +8,7 @@ RSpec.describe "user sessions" do
 
     expect(page).to have_text(default_user.email)
       .and have_link("Account")
-      .and have_no_link("Log In")
+      .and have_no_link("Log in")
   end
 
   it "does not allow a user to log in with an invalid email" do
@@ -30,8 +30,8 @@ RSpec.describe "user sessions" do
   it "allows a user to log out" do
     sign_in(default_user)
 
-    click_on("Log Out")
+    click_on("Log out")
 
-    expect(page).to have_no_text(default_user.email).and have_link("Log In")
+    expect(page).to have_no_text(default_user.email).and have_link("Log in")
   end
 end

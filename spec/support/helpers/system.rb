@@ -10,13 +10,13 @@ module Helpers::System
   def sign_in_with(email:, password:)
     visit("/")
 
-    click_on("Log In")
+    click_on("Log in")
 
     expect(page).to have_text("Log in to Notice")
 
     fill_in("Email", with: email)
     fill_in("Password", with: password)
 
-    click_on("Log In")
+    click_on("Log in")
   end
 end

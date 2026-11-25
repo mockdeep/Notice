@@ -38,7 +38,6 @@
 /* Base */
 
 body {
-  margin: 33px;
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
@@ -255,8 +254,9 @@ div.actions {
 /* Layout */
 
 main {
-  max-width: 800px;
-  margin: auto;
+  max-width: 1040px;
+  padding: var(--space-6) var(--space-5) var(--space-7);
+  margin: 0 auto;
 }
 
 .card-list {
@@ -284,47 +284,94 @@ hr {
   float: right;
 }
 
-@media (width <= 400px) {
-  .logo {
-    display: inherit;
-    width: 217px;
-    margin: auto;
-  }
-
-  .nav {
-    display: inherit;
-    width: 217px;
-    margin: auto;
-    text-align: center;
-  }
-}
-
 .header {
   padding: 10px 0;
   margin: 10px 0;
 }
 
+/* Site header */
+
+.site-header {
+  background-color: var(--color-surface);
+  border-bottom: var(--border-bold);
+}
+
+.site-header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1040px;
+  padding: var(--space-3) var(--space-5);
+  margin: 0 auto;
+}
+
 .wordmark {
   display: inline-flex;
   align-items: flex-end;
-  margin-bottom: 12px;
   font-family: var(--font-display);
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 600;
   line-height: 1;
   color: var(--color-ink);
+  text-decoration: none;
 }
 
 .wordmark-marker {
-  height: 1.8em;
-  margin-right: 0.02em;
+  height: 1.3em;
+  margin-right: 0.1em;
   margin-bottom: -0.02em;
 }
 
-@media (width >= 400px) {
-  .nav {
-    margin-left: 20px;
-  }
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.site-nav-email {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.site-nav form {
+  display: contents;
+}
+
+.site-nav button,
+.site-nav .btn {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  font-size: 14px;
+}
+
+/* Login and sign up */
+
+.auth-card {
+  box-sizing: border-box;
+  max-width: 400px;
+  padding: var(--space-6);
+  margin: var(--space-6) auto 0;
+  background-color: var(--color-surface);
+  border: var(--border-bold);
+  border-radius: 20px;
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+
+.auth-card h1 {
+  font-size: 28px;
+}
+
+.auth-card .actions {
+  margin-bottom: 0;
+}
+
+.auth-card input[type="submit"] {
+  width: 100%;
 }
 
 h3 {
