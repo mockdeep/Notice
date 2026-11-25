@@ -34,7 +34,7 @@ RSpec.describe "checks/index", :js do
 
     find_check(check).edit_icon.click
 
-    expect(page).to have_text("Editing Check: #{check.name}")
+    expect(page).to have_heading("Edit check").and have_text(check.name)
   end
 
   it "allows refreshing checks" do

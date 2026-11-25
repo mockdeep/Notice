@@ -15,15 +15,15 @@ RSpec.describe "GitHub integration", :js do
     expect(page).to have_heading("Your checks")
     click_on("New check")
 
-    expect(page).to have_text("Pick an integration")
+    expect(page).to have_text("What should Notice keep count of?")
   end
 
   def authenticate_with_github
     click_on("GitHub")
 
-    expect(page).to have_text("First time GitHub integration")
+    expect(page).to have_heading("Connect GitHub")
 
-    click_on("Authenticate with GitHub")
+    click_on("Connect to GitHub")
     fill_in("Username or email", with: github_email)
     fill_in("Password", with: github_password)
     click_on("Sign in")
@@ -40,7 +40,7 @@ RSpec.describe "GitHub integration", :js do
     wait_time = FakeApis.enabled? ? Capybara.default_max_wait_time : 10.minutes
     expect(page).to have_text("Name your check", wait: wait_time)
     fill_in("Name", with: name)
-    click_on("Done")
+    click_on("Create check")
   end
 
   it "allows a user to configure a Trello integration" do

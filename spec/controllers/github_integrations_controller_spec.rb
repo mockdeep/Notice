@@ -19,7 +19,7 @@ RSpec.describe GithubIntegrationsController do
 
       get(:new)
 
-      expect(rendered).to have_link("Authenticate with GitHub")
+      expect(rendered).to have_link("Connect to GitHub")
     end
   end
 

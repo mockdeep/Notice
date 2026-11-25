@@ -12,7 +12,7 @@ RSpec.describe "checks/edit", :js do
 
     params.each { |field, value| fill_in(field, with: value) }
 
-    click_on("Update Check")
+    click_on("Save changes")
   end
 
   def expect_check_to_activate(check)
@@ -45,7 +45,7 @@ RSpec.describe "checks/edit", :js do
     sign_in(default_user)
 
     Test::Check.next_values << 5 << 5
-    update_check(check, Target: 5, Delta: 1, "Goal Target": 4)
+    update_check(check, Target: 5, Delta: 1, "Goal target": 4)
 
     expect_check_to_activate(check) { travel(1.day) }
   end

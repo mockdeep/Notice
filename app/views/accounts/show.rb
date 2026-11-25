@@ -8,8 +8,17 @@ class Views::Accounts::Show < Views::Base
   end
 
   def view_template
-    h1 { "My Account" }
+    PageHeader(title: "Your account")
 
+    div(class: "form-card") do
+      account_form
+      delete_button
+    end
+  end
+
+  private
+
+  def account_form
     form_with(model: @user, url: account_path) do |form|
       ErrorExplanation(model: @user)
 
@@ -18,16 +27,16 @@ class Views::Accounts::Show < Views::Base
         form.email_field(:email, required: true)
       end
 
-      div(class: "actions") { form.submit("Update Account") }
+      div(class: "actions") { form.submit("Save changes") }
     end
-
-    delete_button
   end
 
-  private
-
   def delete_button
-    form_data = { data: { turbo: true, turbo_confirm: CONFIRM } }
-    button_to("Delete Account", account_path, method: :delete, form: form_data)
+    form = { data: { turbo: true, turbo_confirm: CONFIRM } }
+    options = { method: :delete, class: "btn-danger", form: }
+
+    div(class: "danger-zone") do
+      button_to("Delete account", account_path, **options)
+    end
   end
 end

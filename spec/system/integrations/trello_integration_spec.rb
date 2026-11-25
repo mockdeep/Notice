@@ -15,15 +15,15 @@ RSpec.describe "Trello integration", :js do
     expect(page).to have_heading("Your checks")
     click_on("New check")
 
-    expect(page).to have_text("Pick an integration")
+    expect(page).to have_text("What should Notice keep count of?")
   end
 
   def authenticate_with_trello
     click_on("Trello")
 
-    expect(page).to have_text("First time Trello integration")
+    expect(page).to have_heading("Connect Trello")
 
-    click_on("Authenticate with Trello")
+    click_on("Connect to Trello")
     click_on("Log in")
     fill_in("user", with: trello_email)
     click_on("Continue")
@@ -43,21 +43,21 @@ RSpec.describe "Trello integration", :js do
   def select_board(board)
     expect(page).to have_text("Pick a board")
 
-    select(board, from: "Boards")
+    select(board, from: "Board")
     click_on("Next")
   end
 
   def select_list(list)
     expect(page).to have_text("Pick a list")
 
-    select(list, from: "Lists")
+    select(list, from: "List")
     click_on("Next")
   end
 
   def input_name(name)
     expect(page).to have_text("Name your check")
     fill_in("Name", with: name)
-    click_on("Done")
+    click_on("Create check")
   end
 
   it "allows a user to configure a Trello integration" do

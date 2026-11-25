@@ -6,9 +6,9 @@ RSpec.describe "check_counts/new", :js do
   def user_creates_count
     click_on("Enter count")
 
-    fill_in(:Value, with: 10)
+    fill_in("Count", with: 10)
 
-    click_on("Update Count")
+    click_on("Save count")
   end
 
   it "allows creating new check counts" do

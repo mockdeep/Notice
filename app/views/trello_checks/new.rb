@@ -17,25 +17,28 @@ class Views::TrelloChecks::New < Views::Base
   private
 
   def board_id_step
-    h2 { "Pick a board" }
-
-    form_with(model: @check, url: step_path, method: :get) do |form|
-      form.label(:board_id, "Boards")
+    step_form("Pick a board") do |form|
+      form.label(:board_id, "Board")
       form.collection_select(:board_id, @check.fetch_boards, :id, :name)
-
-      form.submit("Next")
     end
   end
 
   def list_id_step
-    h2 { "Pick a list" }
-
-    form_with(model: @check, url: step_path, method: :get) do |form|
+    step_form("Pick a list") do |form|
       form.hidden_field(:board_id)
-      form.label(:list_id, "Lists")
+      form.label(:list_id, "List")
       form.collection_select(:list_id, @check.lists, :id, :name)
+    end
+  end
 
-      form.submit("Next")
+  def step_form(title)
+    PageHeader(title:)
+
+    div(class: "form-card") do
+      form_with(model: @check, url: step_path, method: :get) do |form|
+        div(class: "field") { yield(form) }
+        div(class: "actions") { form.submit("Next") }
+      end
     end
   end
 

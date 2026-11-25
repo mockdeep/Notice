@@ -20,14 +20,14 @@ RSpec.describe "user account" do
     click_on("Account")
     fill_in("Email", with: email)
 
-    click_on("Update Account")
+    click_on("Save changes")
   end
 
   def delete_account
     click_on("Account")
 
     accept_confirm("Are you sure? This cannot be undone.") do
-      click_on("Delete Account")
+      click_on("Delete account")
     end
   end
 

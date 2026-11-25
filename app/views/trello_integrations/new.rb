@@ -6,8 +6,14 @@ class Views::TrelloIntegrations::New < Views::Base
   end
 
   def view_template
-    plain("First time Trello integration")
+    PageHeader(
+      title: "Connect Trello",
+      subtitle: "Notice needs your permission to count cards in your lists.",
+    )
 
-    link_to("Authenticate with Trello", @authorize_url)
+    link_to(@authorize_url, class: "btn-primary") do
+      Icon("fab", "trello", aria: { hidden: true })
+      plain("Connect to Trello")
+    end
   end
 end
