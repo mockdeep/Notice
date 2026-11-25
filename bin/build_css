@@ -6,4 +6,5 @@ esbuild app/assets/stylesheets/application.css \
   --bundle \
   --outdir=app/assets/builds \
   --loader:.woff2=file \
+  --loader:.woff=file \
   "$@"
