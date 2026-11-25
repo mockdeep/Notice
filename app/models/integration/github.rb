@@ -1,51 +1,33 @@
 # frozen_string_literal: true
 
 class Integration::Github < Integration
-  CLIENT_ID = Rails.configuration.x.github.client_id
-  CLIENT_SECRET = Rails.configuration.x.github.client_secret
+  validates :access_token, presence: true
+  store_accessor :data, :access_token
+  delegate :count_assigned_pull_requests, to: :client
 
-  def self.implementation=(implementation)
-    @implementation = implementation
-    @client = nil
+  class << self
+    attr_writer :client_class
   end
 
-  def self.implementation
-    @implementation ||= ::Octokit
+  def self.client_class
+    @client_class ||= ::Github::Client
   end
 
   def self.authorize_url(state:)
-    params = { client_id: CLIENT_ID, state: }
-    "#{client.web_endpoint}/login/oauth/authorize?#{params.to_query}"
+    client_class.authorize_url(state:)
   end
 
-  def self.client
-    @client ||= implementation::Client.new(
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-    )
+  def web_endpoint
+    self.class.client_class.web_endpoint
   end
-
-  validates :access_token, presence: true
-  store_accessor :data, :access_token
-  delegate :implementation, to: :class
-  delegate :web_endpoint, to: :client
 
   def code=(code)
-    data = client.exchange_code_for_token(code)
-    self.access_token = data.access_token
-  end
-
-  def pull_requests
-    client.issues.select(&:pull_request)
+    self.access_token = self.class.client_class.exchange_code(code:)
   end
 
   private
 
   def client
-    @client ||= implementation::Client.new(
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-      access_token:,
-    )
+    @client ||= self.class.client_class.new(access_token:)
   end
 end

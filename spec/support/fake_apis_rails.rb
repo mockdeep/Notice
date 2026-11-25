@@ -2,17 +2,17 @@
 
 if FakeApis.enabled?
   require_relative "fake_api/modules"
-  require_relative "fake_api/github/implementation"
+  require_relative "fake_api/github/client"
   require_relative "fake_api/trello/client"
   require_relative "fake_api/trello/implementation"
 
   RSpec.configuration.before(js: true) do
-    Integration::Github.implementation = FakeApi::Github::Implementation
+    Integration::Github.client_class = FakeApi::Github::Client
     Integration::Trello.client_class = FakeApi::Trello::Client
   end
 
   RSpec.configuration.after(js: true) do
-    Integration::Github.implementation = nil
+    Integration::Github.client_class = nil
     Integration::Trello.client_class = nil
   end
 else
