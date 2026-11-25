@@ -2,35 +2,91 @@
 @import "@fontsource/fredoka/latin-600.css";
 @import "./custom.css";
 
-body {
-  margin: 33px;
-  color: #333;
-  background-color: #fff;
+/* Shared settings */
+
+:root {
+  --color-ink: #23201b;
+  --color-muted: #5f574b;
+  --color-line: #e6dcc7;
+  --color-page: #fdfaf3;
+  --color-surface: #fff;
+  --color-yellow: #ffc531;
+  --color-butter: #fff0b8;
+  --color-good: #2f6b3a;
+  --color-good-soft: #e4f0e1;
+  --color-good-text: #1f4a28;
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+  --color-danger-text: #8c1d17;
+  --font-body: system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+  --font-display: fredoka, "Trebuchet MS", sans-serif;
+  --radius-small: 10px;
+  --radius-medium: 12px;
+  --radius-large: 16px;
+  --radius-pill: 999px;
+  --border-bold: 2px solid var(--color-ink);
+  --shadow-pop: 3px 3px 0 var(--color-ink);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
 }
 
-body,
-p,
-ol,
-ul,
-td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
+/* Base */
+
+body {
+  margin: 33px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background-color: var(--color-page);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 {
+  margin-bottom: var(--space-5);
+  font-size: 40px;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
 }
 
 pre {
   padding: 10px;
-  font-size: 11px;
-  background-color: #eee;
+  font-size: 13px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-small);
 }
 
 a {
-  color: #000;
+  color: var(--color-ink);
 }
 
 a:hover {
-  color: #fff;
-  background-color: #000;
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-yellow);
+  outline-offset: 2px;
 }
 
 th {
@@ -41,45 +97,162 @@ td {
   padding: 0 5px 7px;
 }
 
-div.field,
-div.actions {
-  margin-bottom: 10px;
+/* Buttons
+ *
+ * Form submit buttons are primary by default. Plain <button> elements
+ * (for example from `button_to`) are secondary unless given a class.
+ */
+
+button,
+input[type="submit"],
+.btn,
+.btn-primary,
+.btn-danger {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+  cursor: pointer;
+  background-color: var(--color-surface);
+  border: var(--border-bold);
+  border-radius: var(--radius-pill);
+  transition:
+    transform 0.1s ease-out,
+    box-shadow 0.1s ease-out;
 }
 
-.flash-success {
-  color: green;
+input[type="submit"],
+.btn-primary {
+  background-color: var(--color-yellow);
+  box-shadow: var(--shadow-pop);
 }
 
-.flash-error {
-  color: red;
+input[type="submit"]:hover,
+.btn-primary:hover {
+  box-shadow: 4px 4px 0 var(--color-ink);
+  transform: translate(-1px, -1px);
 }
 
-.error-explanation {
-  width: 450px;
-  padding: 7px 7px 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-  border: 2px solid red;
+input[type="submit"]:active,
+.btn-primary:active {
+  box-shadow: 1px 1px 0 var(--color-ink);
+  transform: translate(2px, 2px);
 }
 
-.error-explanation h2 {
-  padding: 5px 5px 5px 15px;
-  margin: -7px -7px 0;
-  font-size: 12px;
-  font-weight: bold;
+.btn-danger {
   color: #fff;
-  text-align: left;
-  background-color: #c00;
+  background-color: var(--color-danger);
 }
 
-.error-explanation ul li {
-  font-size: 12px;
-  list-style: square;
+.btn-icon {
+  width: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-small);
 }
+
+.btn-icon:hover {
+  background-color: var(--color-butter);
+}
+
+/* Forms */
 
 label {
   display: block;
+  margin-bottom: var(--space-1);
+  font-size: 14px;
+  font-weight: 700;
 }
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 380px;
+  min-height: 48px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--color-ink);
+  background-color: var(--color-surface);
+  border: var(--border-bold);
+  border-radius: var(--radius-medium);
+}
+
+textarea {
+  padding: var(--space-3) 14px;
+}
+
+div.field,
+div.actions {
+  margin-bottom: var(--space-4);
+}
+
+div.actions {
+  margin-top: var(--space-5);
+}
+
+/* Messages */
+
+.flash-success,
+.flash-error {
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-3) 0;
+  font-weight: 600;
+  border: 2px solid;
+  border-radius: var(--radius-medium);
+}
+
+.flash-success {
+  color: var(--color-good-text);
+  background-color: var(--color-good-soft);
+  border-color: var(--color-good);
+}
+
+.flash-error {
+  color: var(--color-danger-text);
+  background-color: var(--color-danger-soft);
+  border-color: var(--color-danger);
+}
+
+.error-explanation {
+  max-width: 450px;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  color: var(--color-danger-text);
+  background-color: var(--color-danger-soft);
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius-medium);
+}
+
+.error-explanation h2 {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.error-explanation ul {
+  padding-left: var(--space-5);
+}
+
+.error-explanation ul li {
+  list-style: square;
+}
+
+/* Layout */
 
 main {
   max-width: 800px;
@@ -101,7 +274,6 @@ hr {
 .inactive h2 {
   margin-top: 50px;
   font-size: 30px;
-  font-weight: bold;
 }
 
 .inactive {
@@ -110,24 +282,6 @@ hr {
 
 .new-check-btn {
   float: right;
-}
-
-.btn-primary {
-  padding: 9px 12px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  background-color: rgb(71 120 186);
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.2s linear;
-}
-
-.btn-primary:hover {
-  background-color: rgb(71 120 186 / 80%);
 }
 
 @media (width <= 400px) {
@@ -154,11 +308,11 @@ hr {
   display: inline-flex;
   align-items: flex-end;
   margin-bottom: 12px;
-  font-family: Fredoka, "Trebuchet MS", sans-serif;
+  font-family: var(--font-display);
   font-size: 36px;
   font-weight: 600;
   line-height: 1;
-  color: #23201b;
+  color: var(--color-ink);
 }
 
 .wordmark-marker {
@@ -219,6 +373,7 @@ h3 {
 }
 
 .card-actions button {
+  min-height: 0;
   padding: 0;
   font-size: inherit;
   color: inherit;
@@ -255,7 +410,6 @@ h3 {
   max-width: 800px;
   padding: 20px;
   margin: 0 auto;
-  font-size: 16px;
 }
 
 .check-details h1 {
@@ -273,7 +427,7 @@ h3 {
   margin-bottom: 0.25rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -284,9 +438,8 @@ h3 {
 }
 
 .checklist-card-name a:hover {
-  color: #374151;
+  color: var(--color-ink);
   text-decoration: underline;
-  background: none;
 }
 
 .checklist {
@@ -317,6 +470,8 @@ h3 {
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
+  font-size: inherit;
+  font-weight: 400;
   cursor: pointer;
 }
 
@@ -325,10 +480,11 @@ h3 {
   width: 1.25rem;
   height: 1.25rem;
   margin-top: 0.25rem;
+  accent-color: var(--color-ink);
   cursor: pointer;
 }
 
 .no-items {
   font-style: italic;
-  color: #666;
+  color: var(--color-muted);
 }
