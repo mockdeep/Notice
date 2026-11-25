@@ -13,31 +13,34 @@ RSpec.describe ChecksController do
     end
   end
 
-  it "displays Refresh X Targets when multiple targets have unreached goal" do
+  it "displays Lower all targets when targets have unreached goal" do
     create_pair(:check, value: 3, target_value: 5, target_delta: 5)
     login_as(default_user)
 
     get(:index)
 
-    expect(rendered).to have_button("Refresh all 2 targets")
+    expect(rendered).to have_button("Lower all targets")
+      .and have_text("2 checks below haven't reached their goal target yet.")
   end
 
-  it "displays Refresh 1 Target when targets have unreached goal" do
-    create(:check, value: 3, target_value: 5, target_delta: 5)
+  it "displays Lower target on checks that haven't reached their goal" do
+    check = create(:check, value: 3, target_value: 5, target_delta: 5)
     login_as(default_user)
 
     get(:index)
 
-    expect(rendered).to have_button("Refresh 1 target")
+    expect(rendered).to have_button("Lower target for #{check.name}")
+      .and have_text("goal 0")
   end
 
-  it "does not display Refresh 1 Targets when all targets match goal" do
-    create(:check, value: 0)
+  it "does not display Lower buttons when all targets match goal" do
+    check = create(:check, value: 0)
     login_as(default_user)
 
     get(:index)
 
-    expect(rendered).to have_no_button("Refresh 1 target")
+    expect(rendered).to have_no_button("Lower all targets")
+      .and have_no_button("Lower target for #{check.name}")
   end
 
   describe "#show" do

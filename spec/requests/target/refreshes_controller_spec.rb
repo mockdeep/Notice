@@ -30,27 +30,53 @@ RSpec.describe Target::RefreshesController do
       end
     end
 
-    context "when checks: 'one'" do
-      it "refreshes a single unreached goal target" do
+    context "when given a target_id" do
+      it "lowers that target" do
         target = create(:target, value: 5, delta: 5)
         login_as(target.user)
 
-        expect { post(target_refreshes_path(checks: "one")) }
+        expect { post(target_refreshes_path(target_id: target.id)) }
           .to change_record(target, :value).from(5).to(0)
       end
 
-      it "does not refresh a target that matches its goal" do
+      it "does not lower other targets" do
+        target, other_target = create_pair(:target, value: 5, delta: 5)
+        login_as(target.user)
+
+        expect { post(target_refreshes_path(target_id: target.id)) }
+          .to not_change_record(other_target, :value).from(5)
+      end
+
+      it "does not lower a target that matches its goal" do
         target = create(:target, value: 5, goal_value: 5, delta: 5)
         login_as(target.user)
 
-        expect { post(target_refreshes_path(checks: "one")) }
+        expect { post(target_refreshes_path(target_id: target.id)) }
           .to not_change_record(target, :value).from(5)
       end
 
-      it "redirects to checks/index" do
+      it "does not lower another user's target" do
+        target = create(:target, value: 5, delta: 5)
         login_as(create(:user))
 
-        post(target_refreshes_path(checks: "one"))
+        expect { post(target_refreshes_path(target_id: target.id)) }
+          .to not_change_record(target, :value).from(5)
+      end
+
+      it "returns not found for another user's target" do
+        target = create(:target, value: 5, delta: 5)
+        login_as(create(:user))
+
+        post(target_refreshes_path(target_id: target.id))
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "redirects to checks/index" do
+        target = create(:target, value: 5, delta: 5)
+        login_as(target.user)
+
+        post(target_refreshes_path(target_id: target.id))
 
         expect(response).to redirect_to(checks_path)
       end
