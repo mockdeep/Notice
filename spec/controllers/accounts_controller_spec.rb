@@ -181,6 +181,15 @@ RSpec.describe AccountsController do
       end
     end
 
+    it "deletes the user and their checks" do
+      check = create(:check, value: 1)
+      session[:user_id] = check.user.id
+
+      delete(:destroy)
+
+      expect(User.exists?(check.user.id)).to be(false)
+    end
+
     it "clears the session" do
       user = User.create!(valid_create_params[:user])
       session[:user_id] = user.id

@@ -3,12 +3,12 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :integrations, dependent: :delete_all
-  has_many :checks, dependent: :delete_all
+  # User::Destroy deletes these, in the order the foreign keys need.
+  has_many :integrations, dependent: nil
+  has_many :checks, dependent: nil
   has_many :targets, through: :checks
-  has_many :api_keys, dependent: :delete_all
-  # Declared after checks so checks are deleted before their groups.
-  has_many :groups, dependent: :delete_all
+  has_many :api_keys, dependent: nil
+  has_many :groups, dependent: nil
 
   validates :email, presence: true, format: URI::MailTo::EMAIL_REGEXP
 
