@@ -77,6 +77,7 @@ class Components::Layout < Components::Base
 
   def logged_in_nav
     span(class: "site-nav-email") { current_user.email }
+    link_to("Groups", groups_path)
     link_to("Account", account_path)
     button_to("Log out", session_path, method: :delete)
   end

@@ -52,6 +52,16 @@ en:
       error: "Unable to update check"
     destroy:
       success: "Check deleted"
+  groups:
+    create:
+      success: "Group created"
+      error: "Unable to create group"
+    update:
+      success: "Group updated"
+      error: "Unable to update group"
+    destroy:
+      success: "Group deleted"
+      last_group: "You need at least one group, so this one can't be deleted"
   sessions:
     create:
       error: "Invalid email or password"
