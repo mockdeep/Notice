@@ -8,7 +8,7 @@ class Views::GithubIntegrations::New < Views::Base
   def view_template
     PageHeader(
       title: "Connect GitHub",
-      subtitle: "Notice needs your permission to count your pull requests.",
+      subtitle: "Notice needs your permission to count PRs and issues.",
     )
 
     link_to(@authorize_url, class: "btn-primary") do

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   end
 
   resources :github_integrations, only: [:new] do
+    resources :check_types, only: [:index], controller: "github_check_types"
     resources :checks, only: [:new, :create], controller: "github_checks"
   end
 

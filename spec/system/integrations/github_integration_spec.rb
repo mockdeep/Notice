@@ -30,15 +30,21 @@ RSpec.describe "GitHub integration", :js do
   end
 
   def create_github_check(name:)
+    choose_check_type("PRs assigned to me")
     input_name(name)
 
     expect(page).to have_heading("Your checks")
   end
 
-  def input_name(name)
+  def choose_check_type(type)
     # wait to allow time to copy/paste email verification code if necessary
     wait_time = FakeApis.enabled? ? Capybara.default_max_wait_time : 10.minutes
-    expect(page).to have_text("Name your check", wait: wait_time)
+    expect(page).to have_text("New GitHub check", wait: wait_time)
+    click_on(type)
+  end
+
+  def input_name(name)
+    expect(page).to have_text("Name your check")
     fill_in("Name", with: name)
     click_on("Create check")
   end
