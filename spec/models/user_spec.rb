@@ -7,6 +7,13 @@ RSpec.describe User do
   it { is_expected.to have_many(:checks).dependent(:delete_all) }
   it { is_expected.to have_many(:targets).through(:checks) }
   it { is_expected.to have_many(:api_keys).dependent(:delete_all) }
+  it { is_expected.to have_many(:groups).dependent(:delete_all) }
+
+  it "creates a General group" do
+    user = create(:user)
+
+    expect(Group.where(user:).pluck(:name)).to eq(["General"])
+  end
 
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to have_secure_password }

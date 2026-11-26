@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_20_022633) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_25_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -27,15 +27,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_20_022633) do
   create_table "checks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.jsonb "data", default: {}, null: false
+    t.bigint "group_id", null: false
     t.bigint "integration_id", null: false
     t.bigint "latest_count_id"
     t.string "name", null: false
     t.string "type", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["group_id", "name"], name: "index_checks_on_group_id_and_name", unique: true
     t.index ["integration_id"], name: "index_checks_on_integration_id"
     t.index ["latest_count_id"], name: "index_checks_on_latest_count_id"
-    t.index ["user_id", "name"], name: "index_checks_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_checks_on_user_id"
   end
 
@@ -45,6 +46,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_20_022633) do
     t.datetime "updated_at", null: false
     t.bigint "value", null: false
     t.index ["check_id"], name: "index_counts_on_check_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "name"], name: "index_groups_on_user_id_and_name", unique: true
   end
 
   create_table "integrations", force: :cascade do |t|
@@ -240,9 +249,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_20_022633) do
 
   add_foreign_key "api_keys", "users"
   add_foreign_key "checks", "counts", column: "latest_count_id"
+  add_foreign_key "checks", "groups"
   add_foreign_key "checks", "integrations"
   add_foreign_key "checks", "users"
   add_foreign_key "counts", "checks"
+  add_foreign_key "groups", "users"
   add_foreign_key "integrations", "users"
   add_foreign_key "solid_queue_batch_executions", "solid_queue_batches", column: "batch_id", on_delete: :cascade
   add_foreign_key "solid_queue_batch_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
