@@ -5,6 +5,8 @@ require_relative "../modules"
 class FakeApi::Github::Client
   attr_accessor :access_token
 
+  KNOWN_REPOS = ["rails/rails"].freeze
+
   def self.web_endpoint
     "/github"
   end
@@ -23,5 +25,13 @@ class FakeApi::Github::Client
 
   def count_assigned_pull_requests
     2
+  end
+
+  def count_open_pull_requests(repo:)
+    KNOWN_REPOS.include?(repo) ? 3 : 0
+  end
+
+  def repo_exists?(repo:)
+    KNOWN_REPOS.include?(repo)
   end
 end
