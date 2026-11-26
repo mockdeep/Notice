@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Views::Accounts::Show < Views::Base
-  CONFIRM = "Are you sure? This cannot be undone."
-
   def initialize(user:)
     @user = user
   end
@@ -32,11 +30,8 @@ class Views::Accounts::Show < Views::Base
   end
 
   def delete_button
-    form = { data: { turbo: true, turbo_confirm: CONFIRM } }
-    options = { method: :delete, class: "btn-danger", form: }
-
     div(class: "danger-zone") do
-      button_to("Delete account", account_path, **options)
+      link_to("Delete account", remove_account_path, class: "btn-danger")
     end
   end
 end
