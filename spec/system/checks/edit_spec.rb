@@ -15,6 +15,12 @@ RSpec.describe "checks/edit", :js do
     click_on("Save changes")
   end
 
+  def move_check(check, to:)
+    visit(edit_check_path(check))
+    select(to, from: "Group")
+    click_on("Save changes")
+  end
+
   def expect_check_to_activate(check)
     yield
 
@@ -28,6 +34,25 @@ RSpec.describe "checks/edit", :js do
 
     expect { update_check(check, Target: 5) }
       .to deactivate_check(check.name).in(page)
+  end
+
+  it "allows moving a check to another group" do
+    check = create(:check)
+    create(:group, name: "notice")
+    sign_in(default_user)
+
+    move_check(check, to: "notice")
+
+    expect(page).to have_flash(:success, "Check updated")
+  end
+
+  it "hides the group field when there is only one group" do
+    check = create(:check)
+    sign_in(default_user)
+
+    visit(edit_check_path(check))
+
+    expect(page).to have_field("Name").and have_no_field("Group")
   end
 
   it "allows deleting a check" do

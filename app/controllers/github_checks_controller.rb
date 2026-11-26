@@ -2,17 +2,23 @@
 
 class GithubChecksController < ApplicationController
   def new
-    render(Views::GithubChecks::New.new(check:, integration:))
+    render(new_view)
   end
 
   def create
-    check.save!
-    Check::Refresh.call(check)
-
-    redirect_to(checks_path)
+    if check.save
+      Check::Refresh.call(check)
+      redirect_to(checks_path)
+    else
+      render(new_view, status: :unprocessable_content)
+    end
   end
 
   private
+
+  def new_view
+    Views::GithubChecks::New.new(check:, integration:)
+  end
 
   def check
     @check ||= Check::Github::UserHasAssignedPullRequests.new(check_params)
@@ -27,7 +33,6 @@ class GithubChecksController < ApplicationController
     {
       user: current_user,
       integration:,
-      group: current_user.groups.first,
       target_attributes: {},
     }
   end
@@ -35,10 +40,12 @@ class GithubChecksController < ApplicationController
   def check_params
     check_params =
       if params.key?(:check)
-        params.expect(check: [:name])
+        params.expect(check: [:name, :group_id])
       else
         {}
       end
-    check_params.merge(base_params)
+    check_params
+      .reverse_merge(group_id: current_user.groups.first.id)
+      .merge(base_params)
   end
 end

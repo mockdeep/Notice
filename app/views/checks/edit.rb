@@ -27,6 +27,7 @@ class Views::Checks::Edit < Views::Base
       ErrorExplanation(model: @check)
 
       field(form, :name) { form.text_field(:name, required: true) }
+      GroupSelect(form:)
 
       form.fields_for(:target) { |target_form| target_fields(target_form) }
 

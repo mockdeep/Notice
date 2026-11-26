@@ -24,6 +24,36 @@ RSpec.describe ManualChecksController do
         .to change(integration.checks, :count).by(1)
     end
 
+    it "puts the check in the first group by default" do
+      integration = create(:manual_integration)
+      login_as(integration.user)
+
+      path = manual_integration_checks_path(integration)
+      post(path, params: { check: { name: "a new check" } })
+
+      expect(Check.last.group).to eq(integration.user.groups.first)
+    end
+
+    it "puts the check in the chosen group" do
+      group = create(:group)
+      login_as(group.user)
+
+      params = { check: { name: "a new check", group_id: group.id } }
+      post(manual_integration_checks_path(default_manual_integration), params:)
+
+      expect(Check.last.group).to eq(group)
+    end
+
+    it "shows the form again when the name is taken in the group" do
+      check = create(:manual_check)
+      login_as(check.user)
+
+      params = { check: { name: check.name } }
+      post(manual_integration_checks_path(check.integration), params:)
+
+      expect(rendered).to have_text("Name has already been taken")
+    end
+
     it "refreshes the check" do
       integration = create(:manual_integration)
       login_as(integration.user)

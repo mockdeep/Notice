@@ -23,6 +23,15 @@ RSpec.describe Check do
     expect(other_check).to be_valid
   end
 
+  it "does not allow a group that belongs to another user" do
+    other_group = create(:group, user: create(:user))
+
+    check = build(:check, group: other_group)
+    check.validate
+
+    expect(check.errors[:group]).to include("must be one of your groups")
+  end
+
   it "does not allow the same name in one group" do
     create(:check, name: "Open PRs")
 

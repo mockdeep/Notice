@@ -187,6 +187,26 @@ RSpec.describe ChecksController do
         expect(response).to redirect_to(checks_path)
       end
 
+      it "moves the check to another group" do
+        check = create(:check)
+        group = create(:group)
+        login_as(default_user)
+
+        params = { id: check.id, check: { group_id: group.id } }
+        expect { put(:update, params:) }.to change_record(check, :group_id)
+      end
+    end
+
+    context "when moving the check to another user's group" do
+      it "does not move the check" do
+        check = create(:check)
+        group = create(:group, user: create(:user))
+        login_as(default_user)
+
+        params = { id: check.id, check: { group_id: group.id } }
+        expect { put(:update, params:) }.not_to change_record(check, :group_id)
+      end
+
       it "flashes a success message" do
         check = create(:check)
         login_as(default_user)

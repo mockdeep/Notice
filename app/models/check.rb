@@ -10,6 +10,7 @@ class Check < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :group_id }
   validates :integration_id, :group_id, :user_id, :target, presence: true
+  validate :group_belongs_to_user
 
   accepts_nested_attributes_for :target, update_only: true
 
@@ -61,5 +62,13 @@ class Check < ApplicationRecord
 
   def last_value
     latest_count && latest_count.value
+  end
+
+  private
+
+  def group_belongs_to_user
+    return if group.nil? || group.user_id == user_id
+
+    errors.add(:group, "must be one of your groups")
   end
 end
