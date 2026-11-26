@@ -12,8 +12,10 @@ class Components::CheckNameForm < Components::Base
 
     div(class: "form-card") do
       form_with(model: @check, url: @url) do |form|
+        ErrorExplanation(model: @check)
         yield(form) if block
         name_field(form)
+        GroupSelect(form:)
         div(class: "actions") { form.submit("Create check") }
       end
     end

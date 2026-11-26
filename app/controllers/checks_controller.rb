@@ -68,7 +68,7 @@ class ChecksController < ApplicationController
   end
 
   def check_params
-    params.expect(check: [:name, :refresh, { target_attributes: }])
+    params.expect(check: [:name, :group_id, :refresh, { target_attributes: }])
   end
 
   def find_check(id)

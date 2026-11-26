@@ -10,7 +10,7 @@ class Views::TrelloChecks::New < Views::Base
     case @check.next_step
     when "board_id" then board_id_step
     when "list_id" then list_id_step
-    when "name" then name_step
+    else name_step
     end
   end
 
