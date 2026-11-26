@@ -5,6 +5,7 @@ class Views::Checks::Index < Views::Base
     active_checks, @on_target_checks = checks.partition(&:active?)
     @attention_checks = by_priority(active_checks)
     @unreached_goal_targets = unreached_goal_targets
+    @show_groups = checks.map(&:group_id).uniq.many?
   end
 
   def view_template
@@ -34,8 +35,8 @@ class Views::Checks::Index < Views::Base
       section_heading("attention", "Needs attention", @attention_checks.count)
 
       if @attention_checks.any?
-        div(class: "check-cards") do
-          @attention_checks.each { |check| CheckCard(check:) }
+        by_group(@attention_checks) do |checks|
+          div(class: "check-cards") { checks.each { CheckCard(check: it) } }
         end
       else
         all_clear
@@ -47,8 +48,23 @@ class Views::Checks::Index < Views::Base
     section(class: "checks-on-target", aria: { labelledby: "on-target" }) do
       section_heading("on-target", "On target", @on_target_checks.count)
 
-      ul(class: "check-rows") do
-        @on_target_checks.each { |check| CheckRow(check:) }
+      by_group(@on_target_checks) do |checks|
+        ul(class: "check-rows") { checks.each { CheckRow(check: it) } }
+      end
+    end
+  end
+
+  # Yields the checks once per group, under a heading, with groups sorted
+  # by name. With only one group in play the headings would be noise, so
+  # it yields all the checks at once.
+  def by_group(checks)
+    return yield(checks) unless @show_groups
+
+    groups = checks.group_by(&:group).sort_by { |group, _| group.name.downcase }
+    groups.each do |group, group_checks|
+      div(class: "check-group") do
+        h3(class: "check-group-heading") { group.name }
+        yield(group_checks)
       end
     end
   end

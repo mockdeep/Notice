@@ -504,6 +504,19 @@ main {
   border-color: transparent;
 }
 
+.check-group + .check-group {
+  margin-top: var(--space-6);
+}
+
+.check-group-heading {
+  margin-bottom: var(--space-3);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .check-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
