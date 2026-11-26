@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :refreshes, only: [:create]
   end
 
+  resources :groups, except: [:show]
+
   resources :checks, only: [:index, :new, :show, :edit, :update, :destroy] do
     resources :counts, only: [:new, :create], controller: "check_counts"
     put :update_checklist_item, on: :member

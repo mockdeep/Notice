@@ -37,6 +37,7 @@ Metrics/BlockLength:
   AllowedMethods:
     - describe
     - configure
+    - draw
   Exclude:
     - Guardfile
 Rails/FilePath: { EnforcedStyle: slashes }
