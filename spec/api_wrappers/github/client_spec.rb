@@ -70,4 +70,41 @@ RSpec.describe Github::Client do
         .to raise_error(Github::ApiError)
     end
   end
+
+  describe "#count_open_pull_requests" do
+    it "returns the total count of open pull requests in the repo" do
+      query = { q: "repo:rails/rails is:pr is:open", per_page: 1 }.to_query
+      stub_request(:get, "https://api.github.com/search/issues?#{query}")
+        .to_return(body: { total_count: 7, items: [] }.to_json)
+
+      expect(client.count_open_pull_requests(repo: "rails/rails")).to eq(7)
+    end
+  end
+
+  describe "#repo_exists?" do
+    def repo_url
+      "https://api.github.com/repos/rails/rails"
+    end
+
+    it "returns true when GitHub finds the repo" do
+      stub_request(:get, repo_url)
+        .with(headers: { "Authorization" => "Bearer blah" })
+        .to_return(body: { full_name: "rails/rails" }.to_json)
+
+      expect(client.repo_exists?(repo: "rails/rails")).to be(true)
+    end
+
+    it "returns false when GitHub returns 404" do
+      stub_request(:get, repo_url).to_return(status: 404, body: "{}")
+
+      expect(client.repo_exists?(repo: "rails/rails")).to be(false)
+    end
+
+    it "raises Github::ApiError on other errors" do
+      stub_request(:get, repo_url).to_return(status: 500, body: "")
+
+      expect { client.repo_exists?(repo: "rails/rails") }
+        .to raise_error(Github::ApiError)
+    end
+  end
 end

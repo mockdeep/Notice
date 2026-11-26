@@ -3,7 +3,12 @@
 class Integration::Github < Integration
   validates :access_token, presence: true
   store_accessor :data, :access_token
-  delegate :count_assigned_pull_requests, to: :client
+  delegate(
+    :count_assigned_pull_requests,
+    :count_open_pull_requests,
+    :repo_exists?,
+    to: :client,
+  )
 
   class << self
     attr_writer :client_class

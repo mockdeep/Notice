@@ -2,11 +2,8 @@
 
 class Views::GithubCheckTypes::Index < Views::Base
   CHECK_TYPES = [
-    {
-      key: :assigned_pull_requests,
-      icon: ["fas", "user"],
-      path: :new_github_integration_check_path,
-    },
+    { key: :assigned_pull_requests, icon: ["fas", "user"] },
+    { key: :repo_pull_requests, icon: ["fas", "code-pull-request"] },
   ].freeze
 
   def initialize(integration:)
@@ -24,8 +21,10 @@ class Views::GithubCheckTypes::Index < Views::Base
 
   private
 
-  def check_type_option(key:, icon:, path:)
-    link_to(public_send(path, @integration), class: "source-option") do
+  def check_type_option(key:, icon:)
+    path = new_github_integration_check_path(@integration, check_type: key)
+
+    link_to(path, class: "source-option") do
       span(class: "source-option-icon") { Icon(*icon, aria: { hidden: true }) }
       span(class: "source-option-name") { translate(:name, key) }
       span(class: "source-option-about") { translate(:about, key) }

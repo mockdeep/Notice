@@ -43,13 +43,25 @@ RSpec.describe "GitHub integration", :js do
     click_on(type)
   end
 
+  def start_github_check(type)
+    start_new_check
+    authenticate_with_github
+    choose_check_type(type)
+  end
+
+  def input_repo(repo)
+    expect(page).to have_heading("Pick a repository")
+    fill_in("Repository", with: repo)
+    click_on("Next")
+  end
+
   def input_name(name)
     expect(page).to have_text("Name your check")
     fill_in("Name", with: name)
     click_on("Create check")
   end
 
-  it "allows a user to configure a Trello integration" do
+  it "allows a user to add a check for PRs assigned to them" do
     sign_in(default_user)
     start_new_check
 
@@ -57,5 +69,22 @@ RSpec.describe "GitHub integration", :js do
     create_github_check(name: "Pulls for Me")
 
     expect(page).to have_check("Pulls for Me")
+  end
+
+  it "allows a user to add a check for open PRs in a repo" do
+    sign_in(default_user)
+    start_github_check("Open PRs in a repo")
+    input_repo("https://github.com/rails/rails")
+    input_name("Rails PRs")
+
+    expect(page).to have_check("Rails PRs")
+  end
+
+  it "shows an error when the repo is not found" do
+    sign_in(default_user)
+    start_github_check("Open PRs in a repo")
+    input_repo("rails/nope")
+
+    expect(page).to have_text("Repository wasn't found on GitHub")
   end
 end
