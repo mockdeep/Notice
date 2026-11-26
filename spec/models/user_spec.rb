@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe User do
-  it { is_expected.to have_many(:integrations).dependent(:delete_all) }
-  it { is_expected.to have_many(:checks).dependent(:delete_all) }
+  it { is_expected.to have_many(:integrations).dependent(nil) }
+  it { is_expected.to have_many(:checks).dependent(nil) }
   it { is_expected.to have_many(:targets).through(:checks) }
-  it { is_expected.to have_many(:api_keys).dependent(:delete_all) }
-  it { is_expected.to have_many(:groups).dependent(:delete_all) }
+  it { is_expected.to have_many(:api_keys).dependent(nil) }
+  it { is_expected.to have_many(:groups).dependent(nil) }
 
   it "creates a General group" do
     user = create(:user)

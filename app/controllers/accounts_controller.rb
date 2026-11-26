@@ -36,7 +36,7 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    current_user.destroy!
+    User::Destroy.call(current_user)
     log_out
     flash[:success] = t(".success")
     redirect_to(root_path)
