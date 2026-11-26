@@ -21,15 +21,9 @@ RSpec.describe GithubChecksController do
     get(new_github_integration_check_path(integration, check_type:, **))
   end
 
-  def create_params
-    {
-      check_type: "repo_pull_requests",
-      check: { repo: "rails/rails", name: "Rails PRs" },
-    }
-  end
-
-  def post_create
-    post(github_integration_checks_path(integration), params: create_params)
+  def post_create(check_type: "repo_pull_requests")
+    params = { check_type:, check: { repo: "rails/rails", name: "Rails" } }
+    post(github_integration_checks_path(integration), params:)
   end
 
   describe "#new" do
@@ -65,9 +59,14 @@ RSpec.describe GithubChecksController do
   end
 
   describe "#create" do
-    it "creates a repo check" do
+    it "creates a repo PRs check" do
       expect { post_create }
         .to change(Check::Github::RepoHasOpenPullRequests, :count).by(1)
+    end
+
+    it "creates a repo issues check" do
+      expect { post_create(check_type: "repo_issues") }
+        .to change(Check::Github::RepoHasOpenIssues, :count).by(1)
     end
 
     it "redirects to the checks list" do

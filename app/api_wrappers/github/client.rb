@@ -55,6 +55,12 @@ class Github::Client
     count_search_results("repo:#{repo} is:pr is:open")
   end
 
+  # Uses search rather than the repo's `open_issues_count`, which also
+  # counts pull requests.
+  def count_open_issues(repo:)
+    count_search_results("repo:#{repo} is:issue is:open")
+  end
+
   def repo_exists?(repo:)
     self.class.request_json(
       :get,

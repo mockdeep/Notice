@@ -9,7 +9,7 @@ RSpec.describe GithubCheckTypesController do
       %(href="#{path}")
     end
 
-    ["assigned_pull_requests", "repo_pull_requests"].each do |check_type|
+    GithubChecksController::CHECK_CLASSES.each_key do |check_type|
       it "links to the new check page for #{check_type}" do
         integration = create(:github_integration)
         login_as(integration.user)

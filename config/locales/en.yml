@@ -86,6 +86,9 @@ en:
         repo_pull_requests:
           name: "Open PRs in a repo"
           about: "Count open pull requests in a public repository."
+        repo_issues:
+          name: "Open issues in a repo"
+          about: "Count open issues in a public repository."
     github_checks:
       new:
         repo_title: "Pick a repository"

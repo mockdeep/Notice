@@ -4,6 +4,7 @@ class Views::GithubCheckTypes::Index < Views::Base
   CHECK_TYPES = [
     { key: :assigned_pull_requests, icon: ["fas", "user"] },
     { key: :repo_pull_requests, icon: ["fas", "code-pull-request"] },
+    { key: :repo_issues, icon: ["fas", "circle-dot"] },
   ].freeze
 
   def initialize(integration:)
