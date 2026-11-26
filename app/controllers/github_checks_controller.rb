@@ -4,6 +4,7 @@ class GithubChecksController < ApplicationController
   CHECK_CLASSES = {
     "assigned_pull_requests" => Check::Github::UserHasAssignedPullRequests,
     "repo_pull_requests" => Check::Github::RepoHasOpenPullRequests,
+    "repo_issues" => Check::Github::RepoHasOpenIssues,
   }.freeze
 
   def new

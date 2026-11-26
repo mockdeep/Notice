@@ -5,6 +5,7 @@ class Integration::Github < Integration
   store_accessor :data, :access_token
   delegate(
     :count_assigned_pull_requests,
+    :count_open_issues,
     :count_open_pull_requests,
     :repo_exists?,
     to: :client,

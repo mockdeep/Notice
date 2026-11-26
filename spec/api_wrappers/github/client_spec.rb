@@ -81,6 +81,16 @@ RSpec.describe Github::Client do
     end
   end
 
+  describe "#count_open_issues" do
+    it "returns the total count of open issues in the repo" do
+      query = { q: "repo:rails/rails is:issue is:open", per_page: 1 }.to_query
+      stub_request(:get, "https://api.github.com/search/issues?#{query}")
+        .to_return(body: { total_count: 9, items: [] }.to_json)
+
+      expect(client.count_open_issues(repo: "rails/rails")).to eq(9)
+    end
+  end
+
   describe "#repo_exists?" do
     def repo_url
       "https://api.github.com/repos/rails/rails"

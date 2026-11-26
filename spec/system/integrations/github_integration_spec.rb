@@ -80,6 +80,15 @@ RSpec.describe "GitHub integration", :js do
     expect(page).to have_check("Rails PRs")
   end
 
+  it "allows a user to add a check for open issues in a repo" do
+    sign_in(default_user)
+    start_github_check("Open issues in a repo")
+    input_repo("rails/rails")
+    input_name("Rails issues")
+
+    expect(page).to have_check("Rails issues")
+  end
+
   it "shows an error when the repo is not found" do
     sign_in(default_user)
     start_github_check("Open PRs in a repo")

@@ -27,6 +27,10 @@ class FakeApi::Github::Client
     2
   end
 
+  def count_open_issues(repo:)
+    KNOWN_REPOS.include?(repo) ? 5 : 0
+  end
+
   def count_open_pull_requests(repo:)
     KNOWN_REPOS.include?(repo) ? 3 : 0
   end
