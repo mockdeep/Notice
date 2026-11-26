@@ -4,7 +4,8 @@ class ChecksController < ApplicationController
   VALID_STATES = ["complete", "incomplete"].freeze
 
   def index
-    checks = current_user.checks.preload(:latest_count, :target, :integration)
+    checks =
+      current_user.checks.preload(:latest_count, :target, :integration, :group)
     targets = current_user.targets.unreached_goal
 
     render(

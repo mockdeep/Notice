@@ -11,6 +11,42 @@ RSpec.describe ChecksController do
 
       expect(rendered).to have_text("Your checks")
     end
+
+    it "shows group headings sorted by name" do
+      create(:check, group: create(:group, name: "zebra"))
+      create(:check, group: create(:group, name: "apple"))
+      login_as(default_user)
+
+      get(:index)
+
+      expect(group_headings).to eq([[], ["apple", "zebra"]])
+    end
+
+    it "only shows a group in the sections where it has checks" do
+      create(:check, value: 1, group: create(:group, name: "zebra"))
+      create(:check)
+      login_as(default_user)
+
+      get(:index)
+
+      expect(group_headings).to eq([["zebra"], ["General"]])
+    end
+
+    it "does not show group headings when all checks share a group" do
+      create(:check)
+      create(:group)
+      login_as(default_user)
+
+      get(:index)
+
+      expect(rendered).to have_no_css(".check-group-heading")
+    end
+
+    def group_headings
+      [".checks-attention", ".checks-on-target"].map do |section|
+        rendered.all("#{section} .check-group-heading").map(&:text)
+      end
+    end
   end
 
   it "displays Lower all targets when targets have unreached goal" do
