@@ -3,12 +3,13 @@
 class Check < ApplicationRecord
   belongs_to :user
   belongs_to :integration
+  belongs_to :group
   belongs_to :latest_count, class_name: "Count"
   has_one :target, dependent: :delete
   has_many :counts, dependent: :delete_all
 
-  validates :name, presence: true, uniqueness: { scope: :user_id }
-  validates :integration_id, :user_id, :target, presence: true
+  validates :name, presence: true, uniqueness: { scope: :group_id }
+  validates :integration_id, :group_id, :user_id, :target, presence: true
 
   accepts_nested_attributes_for :target, update_only: true
 

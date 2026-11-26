@@ -27,6 +27,7 @@ class ManualChecksController < ApplicationController
     {
       user: current_user,
       integration:,
+      group: current_user.groups.first,
       target_attributes: {},
     }
   end

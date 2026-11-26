@@ -12,6 +12,7 @@ FactoryBot.define do
     sequence(:name, 100) { |n| "Test Check #{n}" }
     target_attributes { { value: target_value, delta: target_delta } }
     user { integration.user }
+    group { user.groups.first }
 
     after(:create) do |check, evaluator|
       if evaluator.value

@@ -28,6 +28,7 @@ class TrelloChecksController < ApplicationController
     {
       user: current_user,
       integration: trello_integration,
+      group: current_user.groups.first,
       target_attributes: {},
     }
   end

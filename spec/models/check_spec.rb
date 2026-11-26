@@ -5,12 +5,29 @@ require "rails_helper"
 RSpec.describe Check do
   it { is_expected.to belong_to(:integration) }
   it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:group) }
   it { is_expected.to have_one(:target).dependent(:delete) }
   it { is_expected.to have_many(:counts).dependent(:delete_all) }
   it { is_expected.to validate_presence_of(:integration_id) }
   it { is_expected.to validate_presence_of(:user_id) }
+  it { is_expected.to validate_presence_of(:group_id) }
   it { is_expected.to validate_presence_of(:target) }
   it { is_expected.to delegate_method(:value).to(:target).with_prefix }
+
+  it "allows the same name in different groups" do
+    create(:check, name: "Open PRs")
+    other_group = create(:group)
+
+    other_check = build(:check, name: "Open PRs", group: other_group)
+
+    expect(other_check).to be_valid
+  end
+
+  it "does not allow the same name in one group" do
+    create(:check, name: "Open PRs")
+
+    expect(build(:check, name: "Open PRs")).not_to be_valid
+  end
 
   describe ".last_counted_before" do
     it "returns checks with counts prior to timestamp" do

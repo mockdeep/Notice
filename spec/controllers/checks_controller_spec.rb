@@ -52,6 +52,7 @@ RSpec.describe ChecksController do
         board_id: "b1",
         list_id: "l1",
         user: integration.user,
+        group: integration.user.groups.first,
         target_attributes: { value: 0, delta: 0 },
       )
     end
@@ -101,6 +102,7 @@ RSpec.describe ChecksController do
         board_id: "b1",
         list_id: "l1",
         user: integration.user,
+        group: integration.user.groups.first,
         target_attributes: { value: 0, delta: 0 },
       )
     end
