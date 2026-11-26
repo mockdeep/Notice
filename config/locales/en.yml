@@ -65,3 +65,11 @@ en:
   sessions:
     create:
       error: "Invalid email or password"
+  views:
+    github_check_types:
+      index:
+        title: "New GitHub check"
+        subtitle: "What should Notice count?"
+        assigned_pull_requests:
+          name: "PRs assigned to me"
+          about: "Count open pull requests assigned to you."

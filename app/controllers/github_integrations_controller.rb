@@ -4,7 +4,7 @@ class GithubIntegrationsController < ApplicationController
   def new
     integration = current_user.integrations.github.first
     if integration
-      redirect_to(new_github_integration_check_path(integration))
+      redirect_to(github_integration_check_types_path(integration))
     else
       url = github_authorize_url
       render(Views::GithubIntegrations::New.new(authorize_url: url))
@@ -18,7 +18,7 @@ class GithubIntegrationsController < ApplicationController
 
     integration = Integration::Github.create!(integration_params)
 
-    redirect_to(new_github_integration_check_path(integration))
+    redirect_to(github_integration_check_types_path(integration))
   end
 
   private

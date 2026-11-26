@@ -4,13 +4,13 @@ require "rails_helper"
 
 RSpec.describe GithubIntegrationsController do
   describe "#new" do
-    it "redirects to the new check page when integration already exists" do
+    it "redirects to the check types page when integration already exists" do
       integration = create(:github_integration)
       login_as(integration.user)
 
       get(:new)
 
-      expected_path = new_github_integration_check_path(integration)
+      expected_path = github_integration_check_types_path(integration)
       expect(response).to redirect_to(expected_path)
     end
 

@@ -11,7 +11,7 @@ class Views::Checks::New < Views::Base
     {
       name: "GitHub",
       icon: ["fab", "github"],
-      about: "Count pull requests assigned to you.",
+      about: "Count pull requests and issues.",
       path: :new_github_integration_path,
     },
     {
