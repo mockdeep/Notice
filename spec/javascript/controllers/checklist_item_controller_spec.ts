@@ -1,6 +1,6 @@
 import { bootStimulus, getController } from "support/stimulus";
 import ChecklistItemController from "controllers/checklist_item_controller";
-import { assert } from "helpers/assert";
+import { ensure } from "helpers/ensure";
 
 const checkUrl = "/checks/1/update_checklist_item";
 
@@ -24,7 +24,7 @@ async function setupController(): Promise<void> {
 
 function checkbox(): HTMLInputElement {
   const selector = "[data-controller='checklist-item']";
-  return assert(document.querySelector<HTMLInputElement>(selector));
+  return ensure(document.querySelector<HTMLInputElement>(selector));
 }
 
 function controller(): ChecklistItemController {
@@ -115,7 +115,7 @@ describe("#toggle when element is not an input", () => {
     ></div>`;
     await bootStimulus("checklist-item", ChecklistItemController);
     vi.stubGlobal("fetch", vi.fn());
-    const el = assert(document.querySelector<HTMLElement>("[data-controller]"));
+    const el = ensure(document.querySelector<HTMLElement>("[data-controller]"));
     const ctrl = getController(el, "checklist-item", ChecklistItemController);
 
     ctrl.toggle();
