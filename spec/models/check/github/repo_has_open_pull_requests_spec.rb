@@ -29,6 +29,14 @@ RSpec.describe Check::Github::RepoHasOpenPullRequests do
     end
   end
 
+  describe "#default_name" do
+    it "names the repo's pull requests" do
+      check = build_check(repo: "rails/rails")
+
+      expect(check.default_name).to eq("rails/rails pull requests")
+    end
+  end
+
   describe "#url" do
     it "links to the repo's pull requests" do
       check = build_check(repo: "rails/rails")

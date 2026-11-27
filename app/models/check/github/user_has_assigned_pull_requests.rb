@@ -13,6 +13,10 @@ class Check::Github::UserHasAssignedPullRequests < Check
     ["fab", "github"]
   end
 
+  def default_name
+    "Assigned pull requests"
+  end
+
   def next_count
     count_assigned_pull_requests
   end
