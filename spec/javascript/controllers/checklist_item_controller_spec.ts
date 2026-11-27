@@ -1,6 +1,6 @@
-import {bootStimulus, getController} from "support/stimulus";
+import { bootStimulus, getController } from "support/stimulus";
 import ChecklistItemController from "controllers/checklist_item_controller";
-import {assert} from "helpers/assert";
+import { assert } from "helpers/assert";
 
 const checkUrl = "/checks/1/update_checklist_item";
 
@@ -93,7 +93,7 @@ describe("#toggle on fetch failure", () => {
   it("reverts the checkbox to its previous state on HTTP error", async () => {
     await setupController();
     checkbox().checked = true;
-    const errorResponse = new Response(null, {status: 422});
+    const errorResponse = new Response(null, { status: 422 });
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(errorResponse));
 
     controller().toggle();

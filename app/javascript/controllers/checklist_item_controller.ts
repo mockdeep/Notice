@@ -1,4 +1,4 @@
-import {Controller} from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus";
 
 function stateFor(checked: boolean): string {
   if (checked) { return "complete"; }
@@ -19,7 +19,7 @@ export default class extends Controller {
   declare urlValue: string;
 
   toggle(): void {
-    const {element} = this;
+    const { element } = this;
 
     if (!(element instanceof HTMLInputElement)) { return; }
 
