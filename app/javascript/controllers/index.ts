@@ -4,7 +4,7 @@
  * ./bin/rails generate stimulus controllerName
  */
 
-import {application} from "./application";
+import { application } from "./application";
 
 import ChecklistItemController from "./checklist_item_controller";
 application.register("checklist-item", ChecklistItemController);
