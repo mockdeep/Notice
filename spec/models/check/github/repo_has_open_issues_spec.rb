@@ -29,6 +29,14 @@ RSpec.describe Check::Github::RepoHasOpenIssues do
     end
   end
 
+  describe "#default_name" do
+    it "names the repo's issues" do
+      check = build_check(repo: "rails/rails")
+
+      expect(check.default_name).to eq("rails/rails issues")
+    end
+  end
+
   describe "#url" do
     it "links to the repo's issues" do
       check = build_check(repo: "rails/rails")

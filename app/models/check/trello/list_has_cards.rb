@@ -16,6 +16,10 @@ class Check::Trello::ListHasCards < Check
     ["fab", "trello"]
   end
 
+  def default_name
+    lists.find { it.id == list_id }&.name
+  end
+
   def next_count
     cards.count
   end

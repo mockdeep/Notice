@@ -43,6 +43,12 @@ class Check < ApplicationRecord
     false
   end
 
+  # Suggested name to pre-fill when creating a check. Nil when there's
+  # nothing to go on.
+  def default_name
+    nil
+  end
+
   def active?
     last_value.present? && last_value > target.value
   end

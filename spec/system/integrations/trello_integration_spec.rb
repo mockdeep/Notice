@@ -35,6 +35,7 @@ RSpec.describe "Trello integration", :js do
   def create_trello_check(board:, list:, name:)
     select_board(board)
     select_list(list)
+    expect(page).to have_field("Name", with: list)
     input_name(name)
 
     expect(page).to have_heading("Your checks")

@@ -27,6 +27,12 @@ RSpec.describe Check::Manual::AnyCount do
     end
   end
 
+  describe "#default_name" do
+    it "returns nil" do
+      expect(described_class.new.default_name).to be_nil
+    end
+  end
+
   describe "#manual?" do
     it "returns true" do
       expect(described_class.new.manual?).to be(true)

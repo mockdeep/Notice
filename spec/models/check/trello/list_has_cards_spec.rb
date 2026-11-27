@@ -25,6 +25,25 @@ RSpec.describe Check::Trello::ListHasCards do
     end
   end
 
+  describe "#default_name" do
+    def build_check(list_id:)
+      integration = create(:trello_integration)
+      described_class.new(integration:, board_id: "dev-board", list_id:)
+    end
+
+    it "returns the list's name" do
+      fake_implementation do
+        expect(build_check(list_id: "inbox").default_name).to eq("Inbox")
+      end
+    end
+
+    it "returns nil when the list isn't found" do
+      fake_implementation do
+        expect(build_check(list_id: "nope").default_name).to be_nil
+      end
+    end
+  end
+
   describe "#icon" do
     it "returns an array for the icon" do
       expect(described_class.new.icon).to eq(["fab", "trello"])

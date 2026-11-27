@@ -26,7 +26,7 @@ class Components::CheckNameForm < Components::Base
   def name_field(form)
     div(class: "field") do
       form.label(:name)
-      form.text_field(:name)
+      form.text_field(:name, value: @check.name || @check.default_name)
     end
   end
 end

@@ -24,6 +24,12 @@ RSpec.describe Check::Github::UserHasAssignedPullRequests do
     end
   end
 
+  describe "#default_name" do
+    it "describes what is counted" do
+      expect(described_class.new.default_name).to eq("Assigned pull requests")
+    end
+  end
+
   describe "#icon" do
     it "returns an array for the icon" do
       expect(described_class.new.icon).to eq(["fab", "github"])
